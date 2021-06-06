@@ -1,10 +1,11 @@
-package com.springboot.app.dao;
+package com.springboot.app.service;
 
 import com.springboot.app.persistence.Employee;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface EmployeeDao {
+public interface EmployeeService {
 
     List<Employee> findAll();
 
