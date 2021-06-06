@@ -1,11 +1,10 @@
 package com.springboot.app.controller;
 
 import com.springboot.app.dao.EmployeeDao;
+import com.springboot.app.exceptions.EmployeeNotFoundException;
 import com.springboot.app.persistence.Employee;
 import com.springboot.app.service.EmployeeService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,4 +22,11 @@ public class EmployeeRestController {
     public List<Employee> findAll() {
         return employeeService.findAll();
     }
+
+    @GetMapping("/employees/{employeeId}")
+    public Employee findById(@PathVariable int employeeId) throws EmployeeNotFoundException {
+        return employeeService.findById(employeeId);
+    }
+
+
 }
