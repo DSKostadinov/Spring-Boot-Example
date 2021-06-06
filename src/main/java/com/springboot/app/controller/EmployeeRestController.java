@@ -39,12 +39,24 @@ public class EmployeeRestController {
         return employee;
     }
 
+    @PutMapping("/employees")
+    public Employee updateEmployee(@RequestBody Employee employee) {
+        LOGGER.info("Updating employee {}...", employee.toString());
+
+        employeeService.save(employee);
+
+        LOGGER.info("Employee updated to {}.", employee.toString());
+
+        return employee;
+    }
     @DeleteMapping("/employees/{employeeId}")
-    public void deleteEmployee(@PathVariable int employeeId) {
-        LOGGER.info("Deleting employee with ID {}...", employeeId);
+    public void deleteEmployee(@PathVariable int employeeId) throws EmployeeNotFoundException {
+        Employee employee = employeeService.findById(employeeId);
+
+        LOGGER.info("Deleting employee {}...", employee.toString());
 
         employeeService.deleteById(employeeId);
 
-        LOGGER.info("Employee with ID {} successfully deleted.", employeeId);
+        LOGGER.info("Employee successfully deleted.");
     }
 }
