@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @Controller
 @RequestMapping("/employees")
 public class EmployeeController {
@@ -43,6 +45,21 @@ public class EmployeeController {
     @PostMapping("/save")
     public String addEmployee(@ModelAttribute("employee") Employee employee) {
         employeeService.save(employee);
+
+        return "redirect:/employees/list";
+    }
+
+    @GetMapping("/showUpdateForm")
+    public String showUpdateForm(@RequestParam("employeeId") int employeeId, Model model) throws EmployeeNotFoundException {
+        model.addAttribute("employee", Optional.ofNullable(employeeService.findById(employeeId)));
+
+        return "employees/employee-form";
+    }
+
+    @GetMapping("/delete")
+    public String delete(@RequestParam("employeeId") int id) {
+
+        employeeService.deleteById(id);
 
         return "redirect:/employees/list";
     }

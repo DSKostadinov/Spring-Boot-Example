@@ -12,4 +12,6 @@ public interface EmployeeService {
     Employee findById(int id) throws EmployeeNotFoundException;
 
     void save(Employee theEmployee);
+
+    void deleteById(int id);
 }
