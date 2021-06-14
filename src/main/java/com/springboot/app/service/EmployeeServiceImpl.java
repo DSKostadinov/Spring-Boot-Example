@@ -1,46 +1,41 @@
 package com.springboot.app.service;
 
-import com.springboot.app.dao.EmployeeDao;
+import com.springboot.app.persistence.EmployeeRepository;
 import com.springboot.app.exceptions.EmployeeNotFoundException;
 import com.springboot.app.persistence.Employee;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements  EmployeeService {
 
-    private EmployeeDao employeeDao;
+    private EmployeeRepository employeeRepository;
 
-    public EmployeeServiceImpl(EmployeeDao employeeDao) {
-        this.employeeDao = employeeDao;
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
     }
 
     @Override
-    @Transactional
     public List<Employee> findAll() {
-        return employeeDao.findAll();
+        return employeeRepository.findAll();
     }
 
     @Override
-    @Transactional
-    public Employee findById(int id) throws EmployeeNotFoundException {
+    public Optional<Employee> findById(int id) throws EmployeeNotFoundException {
         return Optional.ofNullable(
-                employeeDao.findById(id)
+                employeeRepository.findById(id)
                 ).orElseThrow(() -> new EmployeeNotFoundException(String.format("Employee with ID %d not found", id)));
     }
 
     @Override
-    @Transactional
     public void save(Employee employee) {
-        employeeDao.save(employee);
+        employeeRepository.save(employee);
     }
 
     @Override
-    @Transactional
     public void deleteById(int id) {
-        employeeDao.deleteById(id);
+        employeeRepository.deleteById(id);
     }
 }

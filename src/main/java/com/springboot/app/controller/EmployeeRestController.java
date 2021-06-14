@@ -1,6 +1,5 @@
 package com.springboot.app.controller;
 
-import com.springboot.app.dao.EmployeeDao;
 import com.springboot.app.exceptions.EmployeeNotFoundException;
 import com.springboot.app.persistence.Employee;
 import com.springboot.app.service.EmployeeService;
@@ -9,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -28,7 +28,7 @@ public class EmployeeRestController {
     }
 
     @GetMapping("/employees/{employeeId}")
-    public Employee findById(@PathVariable int employeeId) throws EmployeeNotFoundException {
+    public Optional<Employee> findById(@PathVariable int employeeId) throws EmployeeNotFoundException {
         return employeeService.findById(employeeId);
     }
 
@@ -52,7 +52,7 @@ public class EmployeeRestController {
 
     @DeleteMapping("/employees/{employeeId}")
     public void deleteEmployee(@PathVariable int employeeId) throws EmployeeNotFoundException {
-        Employee employee = employeeService.findById(employeeId);
+        Optional<Employee> employee = employeeService.findById(employeeId);
 
         LOGGER.info("Deleting employee {}...", employee.toString());
 
