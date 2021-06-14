@@ -28,7 +28,7 @@ public class EmployeeRestController {
     }
 
     @GetMapping("/employees/{employeeId}")
-    public Optional<Employee> findById(@PathVariable int employeeId) throws EmployeeNotFoundException {
+    public Employee findById(@PathVariable int employeeId) throws EmployeeNotFoundException {
         return employeeService.findById(employeeId);
     }
 
@@ -52,7 +52,7 @@ public class EmployeeRestController {
 
     @DeleteMapping("/employees/{employeeId}")
     public void deleteEmployee(@PathVariable int employeeId) throws EmployeeNotFoundException {
-        Optional<Employee> employee = employeeService.findById(employeeId);
+        Optional<Employee> employee = Optional.ofNullable(employeeService.findById(employeeId));
 
         LOGGER.info("Deleting employee {}...", employee.toString());
 

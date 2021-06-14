@@ -6,7 +6,6 @@ import com.springboot.app.persistence.Employee;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmployeeServiceImpl implements  EmployeeService {
@@ -23,10 +22,9 @@ public class EmployeeServiceImpl implements  EmployeeService {
     }
 
     @Override
-    public Optional<Employee> findById(int id) throws EmployeeNotFoundException {
-        return Optional.ofNullable(
-                employeeRepository.findById(id)
-                ).orElseThrow(() -> new EmployeeNotFoundException(String.format("Employee with ID %d not found", id)));
+    public Employee findById(int id) throws EmployeeNotFoundException {
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException(String.format("Employee with ID %d not found", id)));
     }
 
     @Override
