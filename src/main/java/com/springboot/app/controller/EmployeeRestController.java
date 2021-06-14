@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
 public class EmployeeRestController {
 
     private static Logger LOGGER = LoggerFactory.getLogger(EmployeeRestController.class);
@@ -22,42 +21,9 @@ public class EmployeeRestController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping("/employees")
-    public List<Employee> findAll() {
-        return employeeService.findAll();
-    }
-
     @GetMapping("/employees/{employeeId}")
     public Employee findById(@PathVariable int employeeId) throws EmployeeNotFoundException {
         return employeeService.findById(employeeId);
     }
 
-    @PostMapping("/employees")
-    public Employee addEmployee(@RequestBody Employee employee) {
-        employeeService.save(employee);
-
-        return employee;
-    }
-
-    @PutMapping("/employees")
-    public Employee updateEmployee(@RequestBody Employee employee) {
-        LOGGER.info("Updating employee {}...", employee.toString());
-
-        employeeService.save(employee);
-
-        LOGGER.info("Employee updated to {}.", employee.toString());
-
-        return employee;
-    }
-
-    @DeleteMapping("/employees/{employeeId}")
-    public void deleteEmployee(@PathVariable int employeeId) throws EmployeeNotFoundException {
-        Optional<Employee> employee = Optional.ofNullable(employeeService.findById(employeeId));
-
-        LOGGER.info("Deleting employee {}...", employee.toString());
-
-        employeeService.deleteById(employeeId);
-
-        LOGGER.info("Employee successfully deleted.");
-    }
 }

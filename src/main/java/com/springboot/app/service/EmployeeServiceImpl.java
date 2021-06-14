@@ -17,23 +17,8 @@ public class EmployeeServiceImpl implements  EmployeeService {
     }
 
     @Override
-    public List<Employee> findAll() {
-        return employeeRepository.findAll();
-    }
-
-    @Override
     public Employee findById(int id) throws EmployeeNotFoundException {
         return employeeRepository.findById(id)
                 .orElseThrow(() -> new EmployeeNotFoundException(String.format("Employee with ID %d not found", id)));
-    }
-
-    @Override
-    public void save(Employee employee) {
-        employeeRepository.save(employee);
-    }
-
-    @Override
-    public void deleteById(int id) {
-        employeeRepository.deleteById(id);
     }
 }
